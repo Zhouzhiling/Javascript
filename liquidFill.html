@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.min.js"></script>
+    <script src="echarts-liquidfill.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="container1" style="height:600px;"></div>
+<div id="container2" style="height:600px;"></div>
+<div id="simple" style="height: 600px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var chart1 = echarts.init(document.getElementById('container1'));
+    var chart2 = echarts.init(document.getElementById('container2'));
+    var simple = echarts.init(document.getElementById('simple'));
+
+    var option1={
+        series:[{
+            type:'liquidFill',
+            data: [0.6, {
+                value: 0.5,
+                direction: 'left',
+                itemStyle: {
+                    normal: {
+                        color: 'red'
+                    }
+                }
+            }, 0.4, 0.3],
+            color:['red','#AAA','rgb(50,20,200)'],
+            itemStyle:{
+                normal:{opacity:0.6},
+                emphasis:{opacity:0.9}
+            },
+            //有两种动态，一种是浮现时，一种是显示时
+            //前者用animationEasing和animationDuration来控制
+            //后者用animationEasingUpdate和animationDurationUpdate来控制
+            animationDuration:0,
+            animationEasingUpdate:'cubicOut',
+            label:{
+                normal:{
+                    fontSize:30
+                }
+            }
+
+        }]
+    };
+
+    var option2={
+        series:[{
+            type:'liquidFill',
+            name:'ZZL',
+            data:[{
+                name:'Ranking',
+                value:0.95
+            },0.5,0.4,0.1],
+            color:['#7C8DC1','#8ECEE7','#CDD1E7','8EE7CC'],
+            amplitude:5,
+            direction:'left',
+            //修改形状，可以直接用SVG图的path，非常厉害了，下面这个是条鱼
+            shape:'container',
+//            shape:'diamond',
+            //shape:'path://M367.855,428.202c-3.674-1.385-7.452-1.966-11.146-1.794c0.659-2.922,0.844-5.85,0.58-8.719 c-0.937-10.407-7.663-19.864-18.063-23.834c-10.697-4.043-22.298-1.168-29.902,6.403c3.015,0.026,6.074,0.594,9.035,1.728 c13.626,5.151,20.465,20.379,15.32,34.004c-1.905,5.02-5.177,9.115-9.22,12.05c-6.951,4.992-16.19,6.536-24.777,3.271 c-13.625-5.137-20.471-20.371-15.32-34.004c0.673-1.768,1.523-3.423,2.526-4.992h-0.014c0,0,0,0,0,0.014 c4.386-6.853,8.145-14.279,11.146-22.187c23.294-61.505-7.689-130.278-69.215-153.579c-61.532-23.293-130.279,7.69-153.579,69.202 c-6.371,16.785-8.679,34.097-7.426,50.901c0.026,0.554,0.079,1.121,0.132,1.688c4.973,57.107,41.767,109.148,98.945,130.793 c58.162,22.008,121.303,6.529,162.839-34.465c7.103-6.893,17.826-9.444,27.679-5.719c11.858,4.491,18.565,16.6,16.719,28.643 c4.438-3.126,8.033-7.564,10.117-13.045C389.751,449.992,382.411,433.709,367.855,428.202z',
+            //修改背景的样式
+            backgroundStyle:{
+                borderWidth:5,
+                borderColor:'#E7E7EE',
+                color:'#E7E7E7'
+            },
+
+            //修改标签的样式
+            //If it is a string, {a} refers to series name, {b} to data name, and {c} to data value.
+            label:{
+                normal:{
+                    formatter:'{a}\n{b}\n{c}',
+                    fontSize:28
+                }
+            },
+
+        }],
+        //鼠标浮现的说明框原来这么简单！
+        tooltip:{
+            show:true
+        }
+    };
+
+    var simpleOp = {
+      series:[{
+          type:'liquidFill',
+          name:'TryIt',
+          data:[0.4],
+          label:{
+              normal:{
+                  fontSize:30
+              }
+          }
+      }],
+        tooltip:{
+            show:true
+        }
+    };
+
+    chart1.setOption(option1);
+    chart2.setOption(option2);
+    simple.setOption(simpleOp);
+</script>
+</body>
+</html>
