@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+<style>
+    #slideshow
+    {
+        width:100px;
+        height:100px;
+        position:relative;
+        overflow:hidden
+    }
+</style>
+
+<h1>Web Design</h1>
+<p>There are the things you should know.</p>
+<ol id="linklist">
+    <li>
+        <a href="#">Structure</a>
+    </li>
+    <li>
+        <a href="#">Presentation</a>
+    </li>
+    <li>
+        <a href="#">Behavior</a>
+    </li>
+</ol>
+<div id="slideshow">
+<img src="topics.jpg" alt="building blocks of web design" id="preview"/>
+</div>
+
+<p id="message">Whee!</p>
+<p id="message2">Whee too!</p>
+
+
+<script>
+
+    function prepareSlideshow()
+    {
+        if(!document.getElementById) return false;
+        if(!document.getElementsByTagName) return false;
+        if(!document.getElementById("linklist")) return false;
+        if(!document.getElementById("preview")) return false;
+
+//        //如果没有激活js功能，就不需要太复杂的div格式，所以可以在js里面创建div
+//        var slideshow = document.createElement("div");
+//        slideshow.setAttribute("id","slideshow");
+//        //
+//        var preview = document.createElement("img");
+//        preview.setAttribute("src","topic.jpg");
+//        preview.setAttribute("alt","building blocks of web descirption");
+//        preview.setAttribute("id","preview");
+//        //
+//
+        var preview = document.getElementById("preview");
+        preview.style.position = "absolute";
+
+        var list = document.getElementById("linklist");
+        var links = list.getElementsByTagName("a");
+
+        links[0].onmouseover = function()
+        {
+            moveElement("preview",-100,0,10)
+        }
+        links[1].onmouseover = function()
+        {
+            moveElement("preview",-200,0,10)
+        }
+        links[2].onmouseover = function()
+        {
+            moveElement("preview",-300,0,10)
+        }
+    }
+
+    addLoadEvent(prepareSlideshow());
+
+    function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'funciton')
+        {
+            window.onload = func;
+        }
+        else
+        {
+            window.onload = function()
+            {
+                oldonload();
+                func();
+            }
+        }
+    }
+
+
+    function positionMessage()
+    {
+        if(!document.getElementById) return false;
+        if(!document.getElementById("message")) return false;
+        if(!document.getElementById("message2")) return false;
+
+        var elem = document.getElementById("message");
+        var elem2 = document.getElementById("message2");
+
+        elem.style.position = "absolute";
+        elem.style.left = "400px";
+        elem.style.top = "100px";
+
+        elem2.style.position = "absolute";
+        elem2.style.left = "600px";
+        elem2.style.top = "100px";
+
+        moveElement("message",100,150,10);
+        moveElement("message2",800,50,10);
+    }
+
+    addLoadEvent(positionMessage());
+
+
+    function moveElement(elementID, final_x, final_y, interval)
+    {
+        if(!document.getElementById) return false;
+        if(!document.getElementById(elementID)) return false;
+
+        var elem = document.getElementById(elementID);
+
+        //把movement改成elem本身的元素，可以在函数内外都判断是否有move行为正在进行
+        //如果有，就先清除之后再放新的
+        if(elem.movement)
+        {
+            clearTimeout(elem.movement);
+        }
+        //防止不存在这个属性
+        if(!elem.style.left)
+            elem.style.left = "0px";
+        if(!elem.style.right)
+            elem.style.right = "0px";
+
+        var xpos = parseInt(elem.style.left);
+        var ypos = parseInt(elem.style.top);
+
+        //为了达到平滑的效果
+        var dist_x = Math.ceil((final_x - xpos)/10);
+        var dist_y = Math.ceil((final_y - ypos)/10);
+        if(xpos==final_x && ypos == final_y)
+            return true;
+        xpos = xpos + dist_x;
+        ypos = ypos + dist_y;
+
+        elem.style.left = xpos + "px";
+        elem.style.top = ypos + "px";
+
+
+        //注意这里拼接时候的单引双引号！！debug了超级久！
+        var repeat = "moveElement('" + elementID + "'," + final_x + "," + final_y + "," + interval + ")";
+        elem.movement = setTimeout(repeat,interval);
+    }
+
+</script>
+
+</body>
+</html>
