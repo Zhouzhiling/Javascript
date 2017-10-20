@@ -1,0 +1,72 @@
+<html>
+<head><title>这种方式支持任何浏览器</title></head>
+
+<style>
+    .white
+    {
+        width:100px;
+        height: 500px;
+        display: inline-block;
+        background-color: antiquewhite;
+        border: solid #b1c6d9;
+    }
+
+    .white:hover
+    {
+        background-color: #cabbad;
+    }
+
+</style>
+<body>
+<div id="div1"></div>
+
+<!--<input type="button" value="Play1" onclick="play_click(this,'1.wav');">-->
+<!--<input type="button" value="Play2" onclick="play_click(this,'2.wav');">-->
+<!--<input type="button" value="Play3" onclick="play_click(this,'3.wav');">-->
+<!--<input type="button" value="Play4" onclick="play_click(this,'4.wav');">-->
+<!--<input type="button" value="Play5" onclick="play_click(this,'5.wav');">-->
+
+<div class="white" onclick="play_click(this,'1.wav');"></div>
+<div class="white" onclick="play_click(this,'2.wav');"></div>
+<div class="white" onclick="play_click(this,'3.wav');"></div>
+<div class="white" onclick="play_click(this,'4.wav');"></div>
+<div class="white" onclick="play_click(this,'5.wav');"></div>
+<div class="white" onclick="play_click(this,'6.wav');"></div>
+<div class="white" onclick="play_click(this,'7.wav');"></div>
+
+<div id="div2"></div>
+<script language="javascript">
+
+    function play_click(sef, url) {
+        var div = document.getElementById('div1');
+        div.innerHTML = '<embed src="' + url + '" loop="0" autostart="true" hidden="true"></embed>';
+        var emb = document.getElementsByTagName('EMBED')[0];
+//        if (emb) {
+//            /* 这里可以写成一个判断 wav 文件是否已加载完毕，以下采用setTimeout模拟一下 */
+//            div = document.getElementById('div2');
+//            div.innerHTML = 'loading: ' + emb.src;
+////            sef.disabled = true;
+//            setTimeout(function () {
+//                div.innerHTML = '';
+//            }, 1000);
+//        }
+    }
+
+    document.onkeydown=function(event)
+    {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+//        if(e && e.keyCode==48){ // 按 Esc
+            play_click(this,(e.keyCode-47)+'.wav');
+//        }
+//        if(e && e.keyCode==49){ // 按 F2
+//            play_click(this,'1.wav');
+//        }
+//        if(e && e.keyCode==50){ // enter 键
+//            //要做的事情
+//        }
+    }
+
+
+</script>
+</body>
+</html>
